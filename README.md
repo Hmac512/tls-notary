@@ -4,7 +4,7 @@ The pagesigner requires the notary server to be running
 
 ## Notary server
 
-````make init-notary
+```make init-notary
 make build-notary
 make run-notary # Should start the notary server```
 
