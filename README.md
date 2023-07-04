@@ -24,6 +24,8 @@ make test-verify path=<path to saved session>
 make test-verify path=/Users/boltzmann/Rubicon/backup-tls-notary/pagesigner-cli/saved_sessions/www.google.com-JtY1Jc
 cd pagesigner-cli && ./test-verify.sh /Users/boltzmann/Rubicon/backup-tls-notary/pagesigner-cli/saved_sessions/www.google.com-JtY1Jc/proof.pgsg
 undefined
+```
+```
 *.google.com www.google.com
 The imported session was verified and saved in  /Users/boltzmann/Rubicon/backup-tls-notary/pagesigner-cli/saved_sessions/www.google.com-Ct5au9_imported
 ```
