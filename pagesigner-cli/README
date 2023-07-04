@@ -1,0 +1,30 @@
+//---------------------------------------------------------------------------------//
+Update May 2022: We are actively working on a TLSNotary implementation in Rust here:
+https://github.com/tlsnotary/tlsn/
+When the Rust implementation is ready, it will replace this nodejs-based tool.
+//---------------------------------------------------------------------------------//
+
+pgsg-node.js allows you to run PageSigner with nodejs >= v 16.5.0
+
+Clone this repo with:
+git clone --recurse-submodules https://github.com/tlsnotary/pagesigner-cli
+Install dependencies by running inside the pagesigner-cli directory:
+npm ci
+
+
+
+Usage: ./pgsg-node.js <command> [arguments]
+
+where <command> is one of notarize, verify
+
+Examples:
+
+./pgsg-node.js notarize example.com --headers headers.txt
+Notarize example.com using HTTP headers from headers.txt
+The most basic headers file can look like this:
+
+GET /r/worldnews/ HTTP/1.1
+Host: www.reddit.com
+
+./pgsg-node.js verify imported.pgsg
+Verify a Pagesigner session from imported.pgsg. This will create a session directory with the decrypted cleartext and the copy of the pgsg file.
