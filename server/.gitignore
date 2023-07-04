@@ -1,2 +1,4 @@
 garbledPool
 src/notary
+src/public.key
+src/go.mod

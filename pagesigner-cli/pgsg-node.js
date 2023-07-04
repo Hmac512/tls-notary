@@ -1,5 +1,18 @@
 #!/usr/bin/env -S node --experimental-wasm-simd
 
+function makeid(length) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
 const ver = process.versions.node.split(".");
 if (Number(ver[0]) < 16 || (Number(ver[0]) == 16 && Number(ver[1]) < 5)) {
   console.log("Error: the minimum supported node.js version is 16.5.0");
@@ -128,7 +141,6 @@ async function createNewSession(
   host,
   request,
   response,
-  date,
   pgsg,
   is_imported = false
 ) {
@@ -136,13 +148,15 @@ async function createNewSession(
   const sessDir = Path.join(
     __dirname,
     "saved_sessions",
-    date + "_" + host + suffix
-  );
+    host + "-" + makeid(6) + suffix
+  )
+    .toString()
+    .replace(" ", "-");
   fs.mkdirSync(sessDir, { recursive: true });
   fs.writeFileSync(Path.join(sessDir, "request"), request);
   fs.writeFileSync(Path.join(sessDir, "response"), response);
   fs.writeFileSync(
-    Path.join(sessDir, date + ".pgsg"),
+    Path.join(sessDir, "proof" + ".pgsg"),
     Buffer.from(JSON.stringify(pgsg))
   );
   return sessDir;
@@ -286,12 +300,12 @@ async function main() {
       obj["URLFetcher attestation"] = m.trustedOracle.URLFetcherDoc;
     }
     const [host, request, response, date] = await m.verifyPgsgV6(obj);
+    date;
     const serializedPgsg = m.serializePgsg(obj);
     const sessDir = await createNewSession(
       host,
       request,
       response,
-      date,
       serializedPgsg
     );
     console.log("Session was saved in ", sessDir);
@@ -318,7 +332,6 @@ async function main() {
       host,
       request,
       response,
-      date,
       serializedPgsg,
       true
     );
