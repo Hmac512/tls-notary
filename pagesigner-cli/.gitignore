@@ -1,0 +1,8 @@
+node_modules
+notarized-linkedn
+cache
+uber-signed
+saved_sessions
+requests
+*.zip
+.DS_Store
